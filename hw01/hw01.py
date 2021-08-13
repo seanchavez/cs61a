@@ -104,15 +104,15 @@ def with_if_function():
 
 
 def c():
-    "*** YOUR CODE HERE ***"
+    return False
 
 
 def t():
-    "*** YOUR CODE HERE ***"
+    return print(5)
 
 
 def f():
-    "*** YOUR CODE HERE ***"
+    return print(6)
 
 
 def hailstone(x):
