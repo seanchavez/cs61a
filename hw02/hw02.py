@@ -129,7 +129,7 @@ def make_repeater(h, n):
     >>> make_repeater(square, 0)(5) # Yes, it makes sense to apply the function zero times! 
     5
     """
-    "*** YOUR CODE HERE ***"
+    return accumulate(compose1, identity, n, lambda x: h)
 
 
 ##########################
