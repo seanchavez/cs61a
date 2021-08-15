@@ -39,7 +39,15 @@ def free_bacon(score):
     """
     assert score < 100, 'The game should be over.'
     # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
+    score_cubed, total, i = pow(score, 3), 0, 0
+    while score_cubed > 0:
+        score_cubed, digit = score_cubed // 10, score_cubed % 10
+        if i % 2 == 0:
+            total += digit
+        else:
+            total -= digit
+        i += 1
+    return 1 + abs(total)
     # END PROBLEM 2
 
 
