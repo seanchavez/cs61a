@@ -95,6 +95,15 @@ def silence(score0, score1):
     return silence
 
 
+def get_score(strategy, score, opp_score, dice, feral, prev_score):
+    """Returns final result of roll and result before any possible bonus"""
+    num_dice = strategy(score, opp_score)
+    result = take_turn(num_dice, opp_score, dice)
+    if feral and abs(prev_score - num_dice) == 2:
+        score += 3
+    return score + result, result
+
+
 def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
          goal=GOAL_SCORE, say=silence, feral_hogs=True):
     """Simulate a game and return the final scores of both players, with Player
@@ -118,17 +127,11 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     prev0, prev1 = 0, 0
     while True:
         if who:
-            num_dice = strategy1(score1, score0)
-            result = take_turn(num_dice, score0, dice)
-            if feral_hogs and abs(prev1 - num_dice) == 2:
-                score1 += 3
-            score1, prev1 = score1 + result, result
+            score1, prev1 = get_score(
+                strategy1, score1, score0, dice, feral_hogs, prev1)
         else:
-            num_dice = strategy0(score0, score1)
-            result = take_turn(num_dice, score1, dice)
-            if feral_hogs and abs(prev0 - num_dice) == 2:
-                score0 += 3
-            score0, prev0 = score0 + result, result
+            score0, prev0 = get_score(
+                strategy0, score0, score1, dice, feral_hogs, prev0)
         if is_swap(score0, score1):
             score0, score1 = score1, score0
         if score0 >= goal or score1 >= goal:
