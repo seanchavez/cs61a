@@ -115,19 +115,25 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     """
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
+    prev0, prev1 = 0, 0
     while True:
         if who:
-            score1 += take_turn(strategy1(score1, score0), score0, dice)
-            if is_swap(score1, score0):
-                score1, score0 = score0, score1
+            num_dice = strategy1(score1, score0)
+            result = take_turn(num_dice, score0, dice)
+            if feral_hogs and abs(prev1 - num_dice) == 2:
+                score1 += 3
+            score1, prev1 = score1 + result, result
         else:
-            score0 += take_turn(strategy0(score0, score1), score1, dice)
-            if is_swap(score0, score1):
-                score0, score1 = score1, score0
+            num_dice = strategy0(score0, score1)
+            result = take_turn(num_dice, score1, dice)
+            if feral_hogs and abs(prev0 - num_dice) == 2:
+                score0 += 3
+            score0, prev0 = score0 + result, result
+        if is_swap(score0, score1):
+            score0, score1 = score1, score0
         if score0 >= goal or score1 >= goal:
             return score0, score1
         who = other(who)
-
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
     # BEGIN PROBLEM 6
