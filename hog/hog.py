@@ -125,6 +125,7 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     prev0, prev1 = 0, 0
+    say = both(say_scores, announce_lead_changes())
     while True:
         if who:
             score1, prev1 = get_score(
@@ -134,6 +135,7 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
                 strategy0, score0, score1, dice, feral_hogs, prev0)
         if is_swap(score0, score1):
             score0, score1 = score1, score0
+        say = say(score0, score1)
         if score0 >= goal or score1 >= goal:
             return score0, score1
         who = other(who)
