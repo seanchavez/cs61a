@@ -104,25 +104,6 @@ test = {
         {
           'code': r"""
           >>> #
-          >>> def echo_0(s0, s1):
-          ...     print('*', s0)
-          ...     return echo_0
-          >>> def echo_1(s0, s1):
-          ...     print('**', s1)
-          ...     return echo_1
-          >>> s0, s1 = play(always_roll(1), always_roll(1), dice=make_test_dice(2), goal=3, say=both(echo_0, echo_1))
-          c1e26c2383bba0314a3621133a7d28ff
-          e4010b4a7d51e81cc1f49e08b015b8eb
-          c1e26c2383bba0314a3621133a7d28ff
-          cad0f4cdee6d8af26abb184d977c50fd
-          # locked
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> #
           >>> s0, s1 = play(always_roll(3), always_roll(3), dice=make_test_dice(1, 2, 3, 3), goal=8, say=both(say_scores, announce_lead_changes()))
           Player 0 now has 0 and Player 1 now has 1
           Player 1 takes the lead by 1

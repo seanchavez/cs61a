@@ -178,7 +178,6 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     prev0, prev1 = 0, 0
-    # say = both(say_scores, announce_lead_changes())
     while True:
         if who:
             score1, prev1 = get_score(
@@ -233,22 +232,16 @@ def announce_highest(who, prev_high=0, prev_score=0):
 
     def say(score0, score1):
         new_prev_high, new_prev_score = prev_high, prev_score
-        print("DEBUG: new_prev_high, new_prev_score: ",
-              new_prev_high, new_prev_score)
         if who:
             score_diff = score1 - new_prev_score
-            if score_diff > new_prev_high:
-                print(score_diff,
-                      "point(s)! That's the biggest gain yet for Player", who)
-                new_prev_high = score_diff
             new_prev_score = score1
         else:
             score_diff = score0 - new_prev_score
-            if score_diff > new_prev_high:
-                print(score_diff,
-                      "point(s)! That's the biggest gain yet for Player", who)
-                new_prev_high = score_diff
             new_prev_score = score0
+        if score_diff > new_prev_high:
+            print(score_diff,
+                  "point(s)! That's the biggest gain yet for Player", who)
+            new_prev_high = score_diff
         return announce_highest(who, new_prev_high, new_prev_score)
     return say
     # END PROBLEM 7
