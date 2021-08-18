@@ -282,7 +282,13 @@ def make_averaged(g, num_samples=1000):
     3.0
     """
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    def averaged(*args):
+        sum, i = 0, 0
+        while i < num_samples:
+            sum += g(*args)
+            i += 1
+        return sum / num_samples
+    return averaged
     # END PROBLEM 8
 
 
