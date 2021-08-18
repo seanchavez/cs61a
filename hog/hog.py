@@ -104,54 +104,6 @@ def get_score(strategy, score, opp_score, dice, feral, prev_score):
     return score + result, result
 
 
-def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
-         goal=GOAL_SCORE, say=silence, feral_hogs=True):
-    """Simulate a game and return the final scores of both players, with Player
-    0's score first, and Player 1's score second.
-
-    A strategy is a function that takes two total scores as arguments (the
-    current player's score, and the opponent's score), and returns a number of
-    dice that the current player will roll this turn.
-
-    strategy0:  The strategy function for Player 0, who plays first.
-    strategy1:  The strategy function for Player 1, who plays second.
-    score0:     Starting score for Player 0
-    score1:     Starting score for Player 1
-    dice:       A function of zero arguments that simulates a dice roll.
-    goal:       The game ends and someone wins when this score is reached.
-    say:        The commentary function to call at the end of the first turn.
-    feral_hogs: A boolean indicating whether the feral hogs rule should be active.
-    """
-    who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
-    # BEGIN PROBLEM 5
-    prev0, prev1 = 0, 0
-    say = both(say_scores, announce_lead_changes())
-    while True:
-        if who:
-            score1, prev1 = get_score(
-                strategy1, score1, score0, dice, feral_hogs, prev1)
-        else:
-            score0, prev0 = get_score(
-                strategy0, score0, score1, dice, feral_hogs, prev0)
-        if is_swap(score0, score1):
-            score0, score1 = score1, score0
-        say = say(score0, score1)
-        if score0 >= goal or score1 >= goal:
-            return score0, score1
-        who = other(who)
-    # END PROBLEM 5
-    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
-    # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 6
-    return score0, score1
-
-
-#######################
-# Phase 2: Commentary #
-#######################
-
-
 def say_scores(score0, score1):
     """A commentary function that announces the score for each player."""
     print("Player 0 now has", score0, "and Player 1 now has", score1)
@@ -205,6 +157,54 @@ def both(f, g):
     return say
 
 
+def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
+         goal=GOAL_SCORE, say=silence, feral_hogs=True):
+    """Simulate a game and return the final scores of both players, with Player
+    0's score first, and Player 1's score second.
+
+    A strategy is a function that takes two total scores as arguments (the
+    current player's score, and the opponent's score), and returns a number of
+    dice that the current player will roll this turn.
+
+    strategy0:  The strategy function for Player 0, who plays first.
+    strategy1:  The strategy function for Player 1, who plays second.
+    score0:     Starting score for Player 0
+    score1:     Starting score for Player 1
+    dice:       A function of zero arguments that simulates a dice roll.
+    goal:       The game ends and someone wins when this score is reached.
+    say:        The commentary function to call at the end of the first turn.
+    feral_hogs: A boolean indicating whether the feral hogs rule should be active.
+    """
+    who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
+    # BEGIN PROBLEM 5
+    prev0, prev1 = 0, 0
+    # say = both(say_scores, announce_lead_changes())
+    while True:
+        if who:
+            score1, prev1 = get_score(
+                strategy1, score1, score0, dice, feral_hogs, prev1)
+        else:
+            score0, prev0 = get_score(
+                strategy0, score0, score1, dice, feral_hogs, prev0)
+        if is_swap(score0, score1):
+            score0, score1 = score1, score0
+        say = say(score0, score1)
+        if score0 >= goal or score1 >= goal:
+            return score0, score1
+        who = other(who)
+    # END PROBLEM 5
+    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
+    # BEGIN PROBLEM 6
+    "*** YOUR CODE HERE ***"
+    # END PROBLEM 6
+    # return score0, score1
+
+
+#######################
+# Phase 2: Commentary #
+#######################
+
+
 def announce_highest(who, prev_high=0, prev_score=0):
     """Return a commentary function that announces when WHO's score
     increases by more than ever before in the game.
@@ -230,7 +230,27 @@ def announce_highest(who, prev_high=0, prev_score=0):
     """
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
-    "*** YOUR CODE HERE ***"
+
+    def say(score0, score1):
+        new_prev_high, new_prev_score = prev_high, prev_score
+        print("DEBUG: new_prev_high, new_prev_score: ",
+              new_prev_high, new_prev_score)
+        if who:
+            score_diff = score1 - new_prev_score
+            if score_diff > new_prev_high:
+                print(score_diff,
+                      "point(s)! That's the biggest gain yet for Player", who)
+                new_prev_high = score_diff
+            new_prev_score = score1
+        else:
+            score_diff = score0 - new_prev_score
+            if score_diff > new_prev_high:
+                print(score_diff,
+                      "point(s)! That's the biggest gain yet for Player", who)
+                new_prev_high = score_diff
+            new_prev_score = score0
+        return announce_highest(who, new_prev_high, new_prev_score)
+    return say
     # END PROBLEM 7
 
 
