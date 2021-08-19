@@ -69,7 +69,15 @@ def both_paths(sofar="S"):
     >>> _ = leftleft()
     SLL
     """
-    "*** YOUR CODE HERE ***"
+    print(sofar)
+
+    def left():
+        return both_paths(sofar + 'L')
+
+    def right():
+        return both_paths(sofar + 'R')
+
+    return left, right
 
 # Higher Order Functions
 
