@@ -114,7 +114,7 @@ def composite_identity(f, g):
     >>> b1(4)                            # (4 + 1)^2 != 4^2 + 1
     False
     """
-    "*** YOUR CODE HERE ***"
+    return lambda x: compose1(f, g)(x) == compose1(g, f)(x)
 
 
 def cycle(f1, f2, f3):
