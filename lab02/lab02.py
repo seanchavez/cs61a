@@ -143,4 +143,20 @@ def cycle(f1, f2, f3):
     >>> do_two_cycles(1)
     19
     """
-    "*** YOUR CODE HERE ***"
+    def do(n):
+        if n == 0:
+            return lambda x: x
+
+        def more(x):
+            i, result = 1, x
+            while i <= n:
+                if (i - 1) % 3 == 0:
+                    result = f1(result)
+                elif i % 3 == 0:
+                    result = f3(result)
+                else:
+                    result = f2(result)
+                i += 1
+            return result
+        return more
+    return do
