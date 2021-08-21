@@ -1,3 +1,4 @@
+from math import floor, log, log2
 from operator import sub, mul
 HW_SOURCE_FILE = 'hw03.py'
 
@@ -74,6 +75,7 @@ def pingpong(n):
         if i % 7 == 0 or num_sevens(i) > 0:
             return seq(i + 1, val + (-next), -next)
         return seq(i + 1, val + next, next)
+
     return seq(1, 1, 1)
 
 
@@ -93,7 +95,16 @@ def count_change(total):
     >>> check(HW_SOURCE_FILE, 'count_change', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    max_val = pow(2, floor(log(total)/log(2)))
+
+    def count(n, m):
+        if n == 1:
+            return 1
+        if n < 0 or m == 0:
+            return 0
+        return count(n - m, m) + count(n, 2 ** (log2(m) - 1))
+
+    return count(total, max_val)
 
 
 def missing_digits(n):
