@@ -98,9 +98,9 @@ def count_change(total):
     max_val = pow(2, floor(log(total)/log(2)))
 
     def count(n, m):
-        if n == 1:
+        if n == 1 or m == 1:
             return 1
-        if n < 0 or m == 0:
+        if n < 0:
             return 0
         return count(n - m, m) + count(n, 2 ** (log2(m) - 1))
 
