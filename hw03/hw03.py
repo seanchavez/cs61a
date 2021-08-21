@@ -66,7 +66,15 @@ def pingpong(n):
     >>> check(HW_SOURCE_FILE, 'pingpong', ['Assign', 'AugAssign'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    assert n > 0, 'pingpong(n) only accepts a positive integer'
+
+    def seq(i, val, next):
+        if i == n:
+            return val
+        if i % 7 == 0 or num_sevens(i) > 0:
+            return seq(i + 1, val + (-next), -next)
+        return seq(i + 1, val + next, next)
+    return seq(1, 1, 1)
 
 
 def count_change(total):
