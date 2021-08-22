@@ -126,12 +126,22 @@ def missing_digits(n):
     >>> check(HW_SOURCE_FILE, 'missing_digits', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
 
+    def count(m, next):
+        if m < 10:
+            return next - m if next + 1 > m else 0
+        digit = m % 10
+        if digit < next:
+            diff = next - digit
+            return diff + count(m // 10, next - diff - 1)
+        return count(m // 10, next - 1)
+
+    return count(n // 10, n % 10 - 1)
 
 ###################
 # Extra Questions #
 ###################
+
 
 def print_move(origin, destination):
     """Print instructions to move a disk."""
