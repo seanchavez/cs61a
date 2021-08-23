@@ -128,16 +128,17 @@ def missing_digits(n):
     """
 
     def count(m, next):
-        if m < 10:
-            return next - m if next + 1 > m else 0
-        digit = m % 10
+        if m == 0:
+            return 0
+        rest, digit = m // 10, m % 10
+        if digit == next + 1:
+            return count(rest, next)
         if digit < next:
             diff = next - digit
-            return diff + count(m // 10, next - diff - 1)
-        return count(m // 10, next - 1)
+            return diff + count(rest, next - diff - 1)
+        return count(rest, next - 1)
 
     return count(n // 10, n % 10 - 1)
-
 ###################
 # Extra Questions #
 ###################
