@@ -61,7 +61,11 @@ def gcd(a, b):
     >>> gcd(40, 40)
     40
     """
-    "*** YOUR CODE HERE ***"
+    lower, higher = min(a, b), max(a, b)
+    r = higher % lower
+    if r == 0:
+        return lower
+    return gcd(lower, r)
 
 
 def paths(m, n):
