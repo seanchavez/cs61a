@@ -3,6 +3,7 @@
 
 this_file = __file__
 
+
 def skip_add(n):
     """ Takes a number n and returns n + n-2 + n-4 + n-6 + ... + 0.
 
@@ -17,10 +18,14 @@ def skip_add(n):
     ...       ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return n + skip_add(n - 2)
+
 
 def summation(n, term):
-
     """Return the sum of the first n terms in the sequence defined by term.
     Implement using recursion!
 
@@ -40,6 +45,7 @@ def summation(n, term):
     assert n >= 1
     "*** YOUR CODE HERE ***"
 
+
 def gcd(a, b):
     """Returns the greatest common divisor of a and b.
     Should be implemented using recursion.
@@ -54,6 +60,7 @@ def gcd(a, b):
     40
     """
     "*** YOUR CODE HERE ***"
+
 
 def paths(m, n):
     """Return the number of paths from one corner of an
