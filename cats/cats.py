@@ -1,5 +1,6 @@
 """Typing test implementation"""
 
+# from typing_extensions import ParamSpec
 from utils import *
 from ucb import main, interact, trace
 from datetime import datetime
@@ -16,7 +17,13 @@ def choose(paragraphs, select, k):
     the empty string.
     """
     # BEGIN PROBLEM 1
-    "*** YOUR CODE HERE ***"
+    count = 0
+    for p in paragraphs:
+        if select(p):
+            if count == k:
+                return p
+            count += 1
+    return ''
     # END PROBLEM 1
 
 
@@ -92,20 +99,20 @@ def feline_fixes(start, goal, limit):
     """A diff function that computes the edit distance from START to GOAL."""
     assert False, 'Remove this line'
 
-    if ______________: # Fill in the condition
+    if ______________:  # Fill in the condition
         # BEGIN
         "*** YOUR CODE HERE ***"
         # END
 
-    elif ___________: # Feel free to remove or add additional cases
+    elif ___________:  # Feel free to remove or add additional cases
         # BEGIN
         "*** YOUR CODE HERE ***"
         # END
 
     else:
         add_diff = ...  # Fill in these lines
-        remove_diff = ... 
-        substitute_diff = ... 
+        remove_diff = ...
+        substitute_diff = ...
         # BEGIN
         "*** YOUR CODE HERE ***"
         # END
@@ -171,10 +178,14 @@ def fastest_words(game):
 
 def game(words, times):
     """A data abstraction containing all words typed and their times."""
-    assert all([type(w) == str for w in words]), 'words should be a list of strings'
-    assert all([type(t) == list for t in times]), 'times should be a list of lists'
-    assert all([isinstance(i, (int, float)) for t in times for i in t]), 'times lists should contain numbers'
-    assert all([len(t) == len(words) for t in times]), 'There should be one word per time.'
+    assert all([type(w) == str for w in words]
+               ), 'words should be a list of strings'
+    assert all([type(t) == list for t in times]
+               ), 'times should be a list of lists'
+    assert all([isinstance(i, (int, float))
+               for t in times for i in t]), 'times lists should contain numbers'
+    assert all([len(t) == len(words) for t in times]
+               ), 'There should be one word per time.'
     return [words, times]
 
 
@@ -205,6 +216,7 @@ def game_string(game):
     """A helper function that takes in a game object and returns a string representation of it"""
     return "game(%s, %s)" % (game[0], game[1])
 
+
 enable_multiplayer = False  # Change to True when you
 
 
@@ -216,7 +228,7 @@ enable_multiplayer = False  # Change to True when you
 def run_typing_test(topics):
     """Measure typing speed and accuracy on the command line."""
     paragraphs = lines_from_file('data/sample_paragraphs.txt')
-    select = lambda p: True
+    def select(p): return True
     if topics:
         select = about(topics)
     i = 0
