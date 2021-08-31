@@ -97,15 +97,10 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     than LIMIT.
     """
     # BEGIN PROBLEM 5
-    least_diff = {"word": user_word, "diff": 0}
-    for word in valid_words:
-        diff = diff_function(user_word, word, limit)
-        if not diff or diff > limit:
-            return word
-        if diff < least_diff['diff']:
-            least_diff['word'] = word
-            least_diff['diff'] = diff
-    return least_diff['word']
+    word_diffs = {word: diff_function(user_word, word, limit)
+                  for word in valid_words}
+    least_diff = min(word_diffs, key=word_diffs.get)
+    return user_word if word_diffs[least_diff] > limit else least_diff
     # END PROBLEM 5
 
 
