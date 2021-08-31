@@ -4,6 +4,7 @@
 from utils import *
 from ucb import main, interact, trace
 from datetime import datetime
+from functools import reduce
 
 
 ###########
@@ -78,7 +79,7 @@ def accuracy(typed, reference):
         if typed_words[i] == reference_words[i]:
             correct += 1
         i += 1
-    return correct / typed_len * 100
+    return round(correct / typed_len * 100, 1)
     # END PROBLEM 3
 
 
@@ -86,7 +87,7 @@ def wpm(typed, elapsed):
     """Return the words-per-minute (WPM) of the TYPED string."""
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
-    return len(typed) / 5 * (60 / elapsed)
+    return round(len(typed) / 5 * (60 / elapsed), 1)
     # END PROBLEM 4
 
 
@@ -96,7 +97,15 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     than LIMIT.
     """
     # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
+    least_diff = {"word": user_word, "diff": 0}
+    for word in valid_words:
+        diff = diff_function(user_word, word, limit)
+        if not diff or diff > limit:
+            return word
+        if diff < least_diff['diff']:
+            least_diff['word'] = word
+            least_diff['diff'] = diff
+    return least_diff['word']
     # END PROBLEM 5
 
 
