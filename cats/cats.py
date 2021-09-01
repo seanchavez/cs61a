@@ -111,12 +111,12 @@ def sphinx_swap(start, goal, limit):
     their lengths.
     """
     # BEGIN PROBLEM 6
+    OVER_LIMIT = 1000
     if limit < 0:
-        return 1000
+        return OVER_LIMIT
     start_len, goal_len = len(start), len(goal)
-    if start_len == 1 or goal_len == 1:
-        len_diff = abs(start_len - goal_len)
-        return 1 + len_diff if start != goal else len_diff
+    if start_len == 0 or goal_len == 0:
+        return abs(start_len - goal_len)
     if start[0] == goal[0]:
         return sphinx_swap(start[1:], goal[1:], limit)
     return 1 + sphinx_swap(start[1:], goal[1:], limit - 1)
