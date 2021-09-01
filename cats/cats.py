@@ -4,7 +4,6 @@
 from utils import *
 from ucb import main, interact, trace
 from datetime import datetime
-from functools import reduce
 
 
 ###########
@@ -112,7 +111,15 @@ def sphinx_swap(start, goal, limit):
     their lengths.
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    if limit < 0:
+        return 1000
+    start_len, goal_len = len(start), len(goal)
+    if start_len == 1 or goal_len == 1:
+        len_diff = abs(start_len - goal_len)
+        return 1 + len_diff if start != goal else len_diff
+    if start[0] == goal[0]:
+        return sphinx_swap(start[1:], goal[1:], limit)
+    return 1 + sphinx_swap(start[1:], goal[1:], limit - 1)
     # END PROBLEM 6
 
 
