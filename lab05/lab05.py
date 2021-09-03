@@ -156,7 +156,12 @@ def nut_finder(t):
     >>> nut_finder(t)
     True
     """
-    "*** YOUR CODE HERE ***"
+    if label(t) == 'nut':
+        return True
+    for b in branches(t):
+        if nut_finder(b):
+            return True
+    return False
 
 
 def sprout_leaves(t, values):
