@@ -211,12 +211,12 @@ def fastest_words(game):
     # BEGIN PROBLEM 10
     fstst_words = [[] for _ in players]
     for w in words:
-        fastest = {'id': 0, 'time': all_times(game)[0][0]}
+        fastest = {'id': -1, 'time': 1e6}
         for p in players:
             player_time = time(game, p, w)
             if player_time < fastest['time']:
                 fastest['id'], fastest['time'] = p, player_time
-        fstst_words[fastest['id']] = word_at(game, w)
+        fstst_words[fastest['id']].append(word_at(game, w))
     return fstst_words
     # END PROBLEM 10
 
