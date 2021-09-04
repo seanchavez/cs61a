@@ -197,10 +197,13 @@ def sprout_leaves(t, values):
           1
           2
     """
-    "*** YOUR CODE HERE ***"
-
+    if is_leaf(t):
+        return tree(label(t), [tree(v) for v in values])
+    return tree(label(t), [sprout_leaves(b, values) for b in branches(t)])
 
 # Tree ADT
+
+
 def tree(label, branches=[]):
     """Construct a tree with the given label value and a list of branches."""
     for branch in branches:
