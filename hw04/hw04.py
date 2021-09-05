@@ -1,6 +1,6 @@
 this_file = __file__
 
-Mobiles
+# Mobiles
 
 
 def mobile(left, right):
@@ -268,10 +268,19 @@ def make_joint(withdraw, old_pass, new_pass):
     >>> make_joint(w, 'hax0r', 'hello')
     "Your account is locked. Attempts: ['my', 'secret', 'password']"
     """
-    "*** YOUR CODE HERE ***"
+    w = withdraw(0, old_pass)
+    if type(w) == str:
+        return w
 
+    def joint_withdraw(amount, pw_attempt):
+        if pw_attempt == new_pass or pw_attempt == old_pass:
+            return withdraw(amount, old_pass)
+        return withdraw(amount, pw_attempt)
+
+    return joint_withdraw
 
 ## Tree Methods ##
+
 
 def tree(label, branches=[]):
     """Construct a tree with the given label value and a list of branches."""
