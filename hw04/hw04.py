@@ -1,6 +1,6 @@
 this_file = __file__
 
-# Mobiles
+Mobiles
 
 
 def mobile(left, right):
@@ -207,13 +207,27 @@ def make_withdraw(balance, password):
     >>> w(20, 'n00b')
     'Incorrect password'
     >>> w(10, 'hax0r')
-    "Your account is locked. Attempts: ['hwat', 'a', 'n00b']"
+    30
     >>> w(10, 'l33t')
     "Your account is locked. Attempts: ['hwat', 'a', 'n00b']"
     >>> type(w(10, 'l33t')) == str
     True
     """
-    "*** YOUR CODE HERE ***"
+    attempts = []
+
+    def withdraw(amount, pw_attempt):
+        if pw_attempt != password:
+            if len(attempts) == 3:
+                return "Your account is locked. Attempts: " + str(attempts)
+            attempts.append(pw_attempt)
+            return "Incorrect password"
+        nonlocal balance
+        if balance < amount:
+            return "Insufficient funds"
+        balance -= amount
+        return balance
+
+    return withdraw
 
 
 def make_joint(withdraw, old_pass, new_pass):
