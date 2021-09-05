@@ -216,9 +216,9 @@ def make_withdraw(balance, password):
     attempts = []
 
     def withdraw(amount, pw_attempt):
+        if len(attempts) == 3:
+            return "Your account is locked. Attempts: " + str(attempts)
         if pw_attempt != password:
-            if len(attempts) == 3:
-                return "Your account is locked. Attempts: " + str(attempts)
             attempts.append(pw_attempt)
             return "Incorrect password"
         nonlocal balance
