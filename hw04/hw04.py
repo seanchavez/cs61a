@@ -119,15 +119,6 @@ def balanced(m):
     right_side = length(right_arm) * total_weight(end(right_arm))
     return left_side == right_side and balanced(end(left_arm)) and balanced(end(right_arm))
 
-    # def examples():
-    # t = mobile(arm(1, planet(2)),
-    #            arm(2, planet(1)))
-    # u = mobile(arm(5, planet(1)),
-    #            arm(1, mobile(arm(2, planet(3)),
-    #                          arm(3, planet(2)))))
-    # v = mobile(arm(4, t), arm(2, u))
-    # return (t, u, v)
-
 
 def totals_tree(m):
     """Return a tree representing the mobile with its total weight at the root.
@@ -154,7 +145,9 @@ def totals_tree(m):
           3
           2
     """
-    "*** YOUR CODE HERE ***"
+    if is_planet(m):
+        return tree(size(m))
+    return tree(total_weight(m), [totals_tree(end(left(m))), totals_tree(end(right(m)))])
 
 
 def replace_leaf(t, old, replacement):
