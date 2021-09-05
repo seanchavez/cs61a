@@ -115,9 +115,10 @@ def balanced(m):
     if is_planet(m):
         return True
     left_arm, right_arm = left(m), right(m)
-    left_side = length(left_arm) * total_weight(end(left_arm))
-    right_side = length(right_arm) * total_weight(end(right_arm))
-    return left_side == right_side and balanced(end(left_arm)) and balanced(end(right_arm))
+    left_torque = length(left_arm) * total_weight(end(left_arm))
+    right_torque = length(right_arm) * total_weight(end(right_arm))
+    return (left_torque == right_torque and
+            balanced(end(left_arm)) and balanced(end(right_arm)))
 
 
 def totals_tree(m):
@@ -179,7 +180,9 @@ def replace_leaf(t, old, replacement):
     >>> laerad == yggdrasil # Make sure original tree is unmodified
     True
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return tree(replacement) if label(t) == old else t
+    return tree(label(t), [replace_leaf(b, old, replacement) for b in branches(t)])
 
 
 def make_withdraw(balance, password):
