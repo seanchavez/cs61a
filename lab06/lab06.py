@@ -49,7 +49,36 @@ def make_fib():
     >>> check(this_file, 'make_fib', ['List'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    # base0, base1, num_calls = -1, 0, 0
+    prev_1, prev_2, num_calls = 0, 1, 0
+
+    def fib():
+        nonlocal prev_1
+        nonlocal prev_2
+        nonlocal num_calls
+        if num_calls == 0:
+            num_calls += 1
+            return prev_1
+        if num_calls == 1:
+            return prev_2
+        current_fib = prev_1 + prev_2
+        prev_1, prev_2,  = prev_2, current_fib
+        return current_fib
+
+        # nonlocal base0, base1, num_calls
+
+        # if num_calls == 0:
+        #     # base0, num_calls = base1 - 1, num_calls + 1
+        #     num_calls += 1
+        #     return base0 + 1
+        # # base1, base2 = base1 + 1, base2 + 1
+        # if num_calls == 1:
+        #     num_calls += 1
+        #     return base1 + 1
+        # base0, base1 = base0 + 1, base1 + 1
+        # return base0 + base1
+
+    return fib
 
 # Generators
 
