@@ -97,7 +97,7 @@ def scale(it, multiplier):
     >>> [next(m) for _ in range(5)]
     [2, 4, 6, 8, 10]
     """
-    "*** YOUR CODE HERE ***"
+    yield from (x * multiplier for x in it)
 
 
 def hailstone(n):
