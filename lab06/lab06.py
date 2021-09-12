@@ -5,7 +5,7 @@ def make_adder_inc(n):
     """
     >>> adder1 = make_adder_inc(5)
     >>> adder2 = make_adder_inc(6)
-    >>> adder1(2) 
+    >>> adder1(2)
     7
     >>> adder1(2) # 5 + 2 + 1
     8
@@ -113,4 +113,9 @@ def hailstone(n):
     2
     1
     """
-    "*** YOUR CODE HERE ***"
+    yield n
+    if n != 1:
+        if n % 2 == 0:
+            yield from hailstone(n // 2)
+        else:
+            yield from hailstone(n * 3 + 1)
