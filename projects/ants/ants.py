@@ -164,6 +164,8 @@ class ThrowerAnt(Ant):
     damage = 1
     # ADD/OVERRIDE CLASS ATTRIBUTES HERE
     food_cost = 3
+    min_range = 0
+    max_range = float('inf')
 
     def nearest_bee(self, beehive):
         """Return the nearest Bee in a Place that is not the HIVE, connected to
@@ -172,10 +174,12 @@ class ThrowerAnt(Ant):
         This method returns None if there is no such Bee (or none in range).
         """
         # BEGIN Problem 3 and 4
-        bee, next_place = random_or_none(self.place.bees), self.place.entrance
+        bee, next_place, distance = None, self.place, 0
         while not bee and next_place.name != 'Hive':
-            bee = random_or_none(next_place.bees)
+            if distance >= self.min_range and distance <= self.max_range:
+                bee = random_or_none(next_place.bees)
             next_place = next_place.entrance
+            distance += 1
         return bee
         # END Problem 3 and 4
 
@@ -208,7 +212,8 @@ class ShortThrower(ThrowerAnt):
     food_cost = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
+    implemented = True
+    max_range = 3
     # END Problem 4
 
 
@@ -219,7 +224,8 @@ class LongThrower(ThrowerAnt):
     food_cost = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
+    implemented = True
+    min_range = 5
     # END Problem 4
 
 
@@ -246,7 +252,13 @@ class FireAnt(Ant):
         if the fire ant dies.
         """
         # BEGIN Problem 5
-        "*** YOUR CODE HERE ***"
+        self.armor -= amount
+        for b in self.place.bees:
+            b.armor -= amount
+            if self.armor <= 0:
+                b.armor -= self.damage
+        if self.armor <= 0:
+            self.remove_from(self.place)
         # END Problem 5
 
 
