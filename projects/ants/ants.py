@@ -120,12 +120,12 @@ class Ant(Insect):
         assert False, "{0} cannot contain an ant".format(self)
 
     def add_to(self, place):
-        if place.ant is None:
+        if place.ant is None or place.ant.can_contain(self) or self.can_contain(place.ant):
             place.ant = self
+            self.place = place
         else:
             # BEGIN Problem 9
-            assert place.ant.can_contain(self) or self.can_contain(
-                place.ant), 'Two ants in {0}'.format(place)
+            assert False, 'Two ants in {0}'.format(place)
             # END Problem 9
         Insect.add_to(self, place)
 
@@ -345,7 +345,7 @@ class ContainerAnt(Ant):
 
     def can_contain(self, other):
         # BEGIN Problem 9
-        not self.contained_ant and not isinstance(other, ContainerAnt)
+        return not self.contained_ant and not isinstance(other, ContainerAnt)
         # END Problem 9
 
     def contain_ant(self, ant):
@@ -371,7 +371,8 @@ class ContainerAnt(Ant):
 
     def action(self, gamestate):
         # BEGIN Problem 9
-        self.contained_ant.action(gamestate)
+        if self.contained_ant:
+            self.contained_ant.action(gamestate)
         # END Problem 9
 
 
@@ -384,9 +385,9 @@ class BodyguardAnt(ContainerAnt):
     # BEGIN Problem 9
     implemented = False   # Change to True to view in the GUI
 
-    def __init__(self, armor=2):
-        ContainerAnt.__init__(self, armor)
-
+    def __init__(self, *args, **kwargs):
+        ContainerAnt.__init__(self, *args, **kwargs)
+        self.armor = 2
     # END Problem 9
 
 
