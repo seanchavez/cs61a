@@ -120,12 +120,19 @@ class Ant(Insect):
         assert False, "{0} cannot contain an ant".format(self)
 
     def add_to(self, place):
-        if place.ant is None or place.ant.can_contain(self) or self.can_contain(place.ant):
+        if place.ant is None:
             place.ant = self
-            self.place = place
         else:
             # BEGIN Problem 9
-            assert False, 'Two ants in {0}'.format(place)
+            # or place.ant.can_contain(self) or self.can_contain(place.ant)
+            first_ant = place.ant
+            if first_ant.can_contain(self):
+                first_ant.contain_ant(self)
+            elif self.can_contain(first_ant):
+                place.ant = self
+                self.contain_ant(first_ant)
+            else:
+                assert False, 'Two ants in {0}'.format(place)
             # END Problem 9
         Insect.add_to(self, place)
 
@@ -350,8 +357,7 @@ class ContainerAnt(Ant):
 
     def contain_ant(self, ant):
         # BEGIN Problem 9
-        if self.can_contain(ant):
-            self.contained_ant = ant
+        self.contained_ant = ant
         # END Problem 9
 
     def remove_ant(self, ant):
@@ -383,7 +389,7 @@ class BodyguardAnt(ContainerAnt):
     food_cost = 4
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 9
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
 
     def __init__(self, *args, **kwargs):
         ContainerAnt.__init__(self, *args, **kwargs)

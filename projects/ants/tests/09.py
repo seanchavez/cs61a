@@ -132,7 +132,7 @@ test = {
           >>> # Place thrower before bodyguard
           >>> gamestate.places["tunnel_0_0"].add_insect(thrower)
           >>> gamestate.places["tunnel_0_0"].add_insect(bodyguard)
-          >>> gamestate.places["tunnel_0_3"].add_insect(bee)
+          >>> gamestate.places["tunnel_0_0"].add_insect(bee)
           >>> bodyguard.action(gamestate)
           >>> bee.armor
           1
