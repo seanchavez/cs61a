@@ -405,7 +405,7 @@ class TankAnt(ContainerAnt):
     food_cost = 6
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 10
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem 10
 
     def __init__(self, armor=2):
@@ -413,7 +413,14 @@ class TankAnt(ContainerAnt):
 
     def action(self, gamestate):
         # BEGIN Problem 10
-        "*** YOUR CODE HERE ***"
+        i, bees, num_bees = 0, self.place.bees, len(self.place.bees)
+        while i < num_bees:
+            Insect.reduce_armor(bees[i], self.damage)
+            if len(bees) == num_bees:   # bee survives
+                i += 1
+            else:   # bee has been killed
+                num_bees = len(bees)
+        ContainerAnt.action(self, gamestate)
         # END Problem 10
 
 
