@@ -146,6 +146,16 @@ class Ant(Insect):
             place.ant.remove_ant(self)
         Insect.remove_from(self, place)
 
+    def damage_bees(self, place, damage):
+        bees = place.bees
+        i, num_bees = 0, len(bees)
+        while i < num_bees:
+            Insect.reduce_armor(bees[i], damage)
+            if len(bees) == num_bees:   # bee survives
+                i += 1
+            else:   # bee has been killed
+                num_bees = len(bees)
+
 
 class HarvesterAnt(Ant):
     """HarvesterAnt produces 1 additional food per turn for the colony."""
@@ -261,15 +271,10 @@ class FireAnt(Ant):
         if the fire ant dies.
         """
         # BEGIN Problem 5
-        i, bees, num_bees = 0, self.place.bees, len(self.place.bees)
+        place = self.place
         Insect.reduce_armor(self, amount)
         damage = amount if self.armor > 0 else amount + self.damage
-        while i < num_bees:
-            Insect.reduce_armor(bees[i], damage)
-            if len(bees) == num_bees:   # bee survives
-                i += 1
-            else:   # bee has been killed
-                num_bees = len(bees)
+        self.damage_bees(place, damage)
         # END Problem 5
 
 
@@ -296,8 +301,6 @@ class HungryAnt(Ant):
         if bee:
             bee.reduce_armor(bee.armor)
             self.digesting = self.time_to_digest
-        else:
-            pass
         # END Problem 6
 
     def action(self, gamestate):
@@ -323,13 +326,7 @@ class NinjaAnt(Ant):
 
     def action(self, gamestate):
         # BEGIN Problem 7
-        i, bees, num_bees = 0, self.place.bees, len(self.place.bees)
-        while i < num_bees:
-            Insect.reduce_armor(bees[i], self.damage)
-            if len(bees) == num_bees:   # bee survives
-                i += 1
-            else:   # bee has been killed
-                num_bees = len(bees)
+        self.damage_bees(self.place, self.damage)
         # END Problem 7
 
 # BEGIN Problem 8
@@ -413,13 +410,7 @@ class TankAnt(ContainerAnt):
 
     def action(self, gamestate):
         # BEGIN Problem 10
-        i, bees, num_bees = 0, self.place.bees, len(self.place.bees)
-        while i < num_bees:
-            Insect.reduce_armor(bees[i], self.damage)
-            if len(bees) == num_bees:   # bee survives
-                i += 1
-            else:   # bee has been killed
-                num_bees = len(bees)
+        self.damage_bees(self.place, self.damage)
         ContainerAnt.action(self, gamestate)
         # END Problem 10
 
